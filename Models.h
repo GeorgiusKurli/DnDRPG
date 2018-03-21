@@ -1,5 +1,5 @@
-#include<iostream>
-using namespace std;
+#ifndef MODELS_H // header guard
+#define MODELS_H
 
 struct Skill
 {
@@ -406,21 +406,21 @@ class Player
 			{
 				if(this->exp >= level * 5 + 5)
 				{
-					cout << (this->name + "has levelled up!") << endl;
+					cout << this->name << " has levelled up!" << endl;
 					this->level = this->level + 1;
 					this->maxhealth += 5;
 					this->currenthealth = maxhealth;
 					this->currentmana = maxmana;
 					
 					tempstat = (1 + rand()%2);
-					cout << ("Strength increased by = " + to_string(tempstat)) << endl;
+					cout << "Strength increased by = " << to_string(tempstat) << endl;
 					this->strength += tempstat;
 					
-					cout << ("Speed increased by = " + to_string(tempstat)) << endl;
+					cout << "Speed increased by = " << to_string(tempstat) << endl;
 					tempstat = (1 + rand()%2);
 					this->speed += tempstat;
 					
-					cout << "Defense increased by = " + to_string(tempstat) << endl;
+					cout << "Defense increased by = " << to_string(tempstat) << endl;
 					tempstat = (1 + rand()%2);
 					this->defense += tempstat;
 						
@@ -473,4 +473,4 @@ class Player
 		}
 		
 };
-
+#endif

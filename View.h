@@ -1,3 +1,5 @@
+#ifndef VIEW_H // header guard
+#define VIEW_H
 #include<iostream>
 #include"Controller.h"
 #include"Models.h"
@@ -9,9 +11,9 @@ Player IntroductionPhase()
 	cout << "Welcome" << endl;
 	cout << "Please tell us your name." << endl;
 	cin >> input;
-	if(input.length()<0){
+	if(input == "no" || input == "No"){
 		name = "Noctis";
-		cout << "Not much into names are we? Well then, I will call you Noctis.";
+		cout << "Not much into names are we? Well then, I will call you Noctis." << endl;
 	}
 	else
 	{
@@ -29,12 +31,21 @@ void BattlePhase(int tier, Player player)
 {
 	Monster enemy(tier);
 	int randint;
-	cout << "A " + enemy.getName() + " appeared! ";
-	cout << "Level: " + enemy.getLevel() << endl;
-	bool battleflag = true;
+	cout << "A " << enemy.getName() << " appeared! " << endl;
+	cout << "Level: " << enemy.getLevel() << endl;
 	string input;
+	
+	//main flag
+	bool battleflag = true;
+	
+	//flag for player choosing
 	bool chooseoption = true;
+	
+	//flag for if player use potion successfully
 	bool tempbool;
+	
+	//flag for if player flees
+	bool exitflag = false;
 	int damage;
 	Skill tempskill;
 	
@@ -64,7 +75,7 @@ void BattlePhase(int tier, Player player)
 				
 				case 2:
 				{
-					cout << "You have " + to_string(player.getHealthPotion()) + " health potion and " + to_string(player.getManaPotion()) + "mana potion." << endl;
+					cout << "You have " << to_string(player.getHealthPotion()) << " health potion and " << to_string(player.getManaPotion()) << "mana potion." << endl;
 					cout << "1.Health Potion 2. Mana Potion 3. Back" << endl;
 					cin >> input;
 					
@@ -100,6 +111,7 @@ void BattlePhase(int tier, Player player)
 				{
 					chooseoption = false;
 					battleflag = false;
+					exitflag = true;
 					continue;
 					break;
 				}
@@ -111,76 +123,78 @@ void BattlePhase(int tier, Player player)
 				}
 			}
 		}
-		
-		if(player.getSpeed() > enemy.getSpeed())
+		if(exitflag != true)
 		{
-			cout << player.getName() + " uses " + tempskill.name << endl;
-			if(tempskill.name != "Potion")
+			if(player.getSpeed() > enemy.getSpeed())
 			{
-				player.setCurrentMana(player.getCurrentMana() - tempskill.manacost);
-				damage = tempskill.damage * player.getStrength() - enemy.getDefense()/3;
-				cout << player.getName() + " deals " + to_string(damage) + " damage.";
-				enemy.setCurrentHealth(enemy.getCurrentHealth() - damage);
-				
-			}
-			
-			if(enemy.getCurrentHealth() > 0)
-			{
-				damage =  enemy.getStrength() - player.getDefense()/3;
-				cout << enemy.getName() + " deals " + to_string(damage) + " damage.";
-				player.setCurrentHealth(player.getCurrentHealth() - damage);
-			}
-			
-		}
-		
-		else if(player.getSpeed() < enemy.getSpeed())
-		{
-			damage =  enemy.getStrength() - player.getDefense()/3;
-			cout << enemy.getName() + " deals " + to_string(damage) + " damage.";
-			player.setCurrentHealth(player.getCurrentHealth() - damage);
-			
-			if(player.getCurrentHealth() > 0)
-			{
-				cout << player.getName() + " uses " + tempskill.name << endl;
+				cout << player.getName() << " uses " + tempskill.name << endl;
 				if(tempskill.name != "Potion")
 				{
 					player.setCurrentMana(player.getCurrentMana() - tempskill.manacost);
 					damage = tempskill.damage * player.getStrength() - enemy.getDefense()/3;
-					cout << player.getName() + " deals " + to_string(damage) + " damage.";
+					cout << player.getName() << " deals " + to_string(damage) << " damage.";
 					enemy.setCurrentHealth(enemy.getCurrentHealth() - damage);
 					
 				}
+				
+				if(enemy.getCurrentHealth() > 0)
+				{
+					damage =  enemy.getStrength() - player.getDefense()/3;
+					cout << enemy.getName() << " deals " + to_string(damage) << " damage.";
+					player.setCurrentHealth(player.getCurrentHealth() - damage);
+				}
+				
 			}
 			
-		}
-		
-		if(enemy.getCurrentHealth() <= 0)
-		{
-			cout << enemy.getName() + " has been slain!" << endl;
-			battleflag = false;
-			
-			cout << "You get " + to_string(enemy.getGoldDrop()) + " gold and " + to_string(enemy.getExpDrop()) + " exp.";
-	
-			randint = rand()%100+1;
-			
-			if(randint > 40)
+			else if(player.getSpeed() < enemy.getSpeed())
 			{
-				randint = rand()%2;
-				if(randint == 0)
+				damage =  enemy.getStrength() - player.getDefense()/3;
+				cout << enemy.getName() << " deals " << to_string(damage) << " damage.";
+				player.setCurrentHealth(player.getCurrentHealth() - damage);
+				
+				if(player.getCurrentHealth() > 0)
 				{
-					//get new weapon
+					cout << player.getName() << " uses " << tempskill.name << endl;
+					if(tempskill.name != "Potion")
+					{
+						player.setCurrentMana(player.getCurrentMana() - tempskill.manacost);
+						damage = tempskill.damage * player.getStrength() - enemy.getDefense()/3;
+						cout << player.getName() << " deals " << to_string(damage) << " damage.";
+						enemy.setCurrentHealth(enemy.getCurrentHealth() - damage);
+						
+					}
 				}
-				else
+				
+			}
+			
+			if(enemy.getCurrentHealth() <= 0)
+			{
+				cout << enemy.getName() << " has been slain!" << endl;
+				battleflag = false;
+				
+				cout << "You get " << to_string(enemy.getGoldDrop()) << " gold and " << to_string(enemy.getExpDrop()) << " exp.";
+		
+				randint = rand()%100+1;
+				
+				if(randint > 40)
 				{
-					//get new armor
+					randint = rand()%2;
+					if(randint == 0)
+					{
+						//get new weapon
+					}
+					else
+					{
+						//get new armor
+					}
 				}
 			}
-		}
-		
-		else if(player.getCurrentHealth() <= 0)
-		{
-			cout << player.getName() + " died" << endl;
-			battleflag = false;
+			
+			else if(player.getCurrentHealth() <= 0)
+			{
+				cout << player.getName() << " died" << endl;
+				battleflag = false;
+			}
 		}
 		
 	}
@@ -189,3 +203,4 @@ void BattlePhase(int tier, Player player)
 	
 	
 }
+#endif
