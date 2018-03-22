@@ -40,7 +40,7 @@ class Monster
 				
 				this->tier = 1;
 				this->level = rand()%9 + 1;
-				this->maxhealth = level * rand()%3 + 20;
+				this->maxhealth = level * (rand()%2 + 3);
 				this->currenthealth = maxhealth;
 				this->strength = level + rand()%3 + 1;
 				this->speed = level + rand()%4 +1;
@@ -146,6 +146,20 @@ class Weapon
 			}
 		}
 		
+		Weapon(int tier,int level, string name){
+			if(tier == 1)
+			{
+				
+				this->name = name;
+				this->tier = tier;
+				this->level = level;
+				this->strength = level + rand()%5;
+				this->value = level * 25 + strength * 50;
+			}
+		}
+		
+		Weapon(){}
+		
 		string getName()
 		{
 			return this->name;
@@ -170,6 +184,13 @@ class Weapon
 		{
 			return this->value;
 		}
+		
+		void printStats()
+		{
+			cout << "Level" << this->level << endl;
+			cout << "Strength: " << this->strength << endl;
+			cout << "Value: " << this->value << endl;
+		}
 };
 
 class Armor
@@ -178,7 +199,6 @@ class Armor
 		string name;
 		int tier;
 		int level;
-		int health;
 		int speed;
 		int defense;
 		int value;
@@ -207,6 +227,22 @@ class Armor
 				this->defense = level + rand()%5;
 				this->value = level * 25 + defense * 50 + speed * 75;
 			}
+		}
+		
+		Armor(int tier, int level, string name){
+			if(tier == 1)
+			{
+				
+				this->name = name;
+				this->tier = tier;
+				this->level = level;
+				this->speed = level + rand()%3 + 1;
+				this->defense = level + rand()%5;
+				this->value = level * 25 + defense * 50 + speed * 75;
+			}
+		}
+		
+		Armor(){
 		}
 		
 		string getName()
@@ -238,6 +274,14 @@ class Armor
 		{
 			return this->value;
 		}
+		
+		void printStats()
+		{
+			cout << "Level: " << this->level << endl;
+			cout << "Speed: " << this->speed << endl;
+			cout << "Defense: " << this->defense << endl;
+			cout << "Value: " << this->value << endl;
+		}
 };
 
 class Player
@@ -256,7 +300,10 @@ class Player
 		int exp;
 		int healthpotion;
 		int manapotion;
+		Weapon playerweapon;
+		Armor playerarmor;
 		Skill skill_list[10];
+		
 		int skillamount;
 		
 	public:
@@ -266,12 +313,20 @@ class Player
 			this->level = level;
 			this->maxhealth = health;
 			this->currenthealth = health;
+			this->maxmana = 100;
 			this->currentmana = maxmana;
 			this->strength = strength;
 			this->speed = speed;
 			this->defense = defense;
 			this->healthpotion = 5;
 			this->manapotion = 3;
+			this->gold = 300;
+			
+			Weapon tempweapon(1,1,"Beginner Sword");
+			this->playerweapon = tempweapon;
+			
+			Armor temparmor(1,1,"Beginner Armor");
+			this->playerarmor = temparmor;
 			
 			Skill temp;
 			temp.damage = 1;
@@ -317,14 +372,29 @@ class Player
 			return this->strength;
 		}
 		
+		int getCombinedStrength()
+		{
+			return (this->strength + this->playerweapon.getStrength());
+		}
+		
 		int getSpeed()
 		{
 			return this->speed;
 		}
 		
+		int getCombinedSpeed()
+		{
+			return (this->speed + this->playerarmor.getSpeed());
+		}
+		
 		int getDefense()
 		{
 			return this->defense;
+		}
+		
+		int getCombinedDefense()
+		{
+			return (this->defense + this->playerarmor.getDefense());
 		}
 		
 		int getGold()
@@ -345,6 +415,16 @@ class Player
 		int getManaPotion()
 		{
 			return this->manapotion;
+		}
+		
+		Weapon getWeapon()
+		{
+			return this->playerweapon;
+		}
+		
+		Armor getArmor()
+		{
+			return this->playerarmor;
 		}
 		
 		void printSkills()
@@ -394,9 +474,20 @@ class Player
 		{
 			this->gold = amount;
 		}
+		
 		void setExp(int amount)
 		{
 			this->exp = amount;
+		}
+		
+		void setWeapon(Weapon tempweapon)
+		{
+			this->playerweapon = tempweapon;
+		}
+		
+		void setArmor(Armor temparmor)
+		{
+			this->playerarmor = temparmor;
 		}
 		
 		void checklevelUp()
@@ -431,6 +522,7 @@ class Player
 		bool useHealthPotion()
 		{
 			bool temp;
+			int heal;
 			
 			if(this->healthpotion <= 0)
 			{
@@ -440,11 +532,13 @@ class Player
 			else
 			{
 				this->healthpotion -= 1;
-				this->currenthealth + this->maxhealth * 0.25;
-				if(this->currenthealth > this->maxhealth)
+				heal = this->currenthealth + this->maxhealth * 0.25;
+				if(this->maxhealth < this->currenthealth + heal)
 				{
-					this->currenthealth = this->maxhealth;
+					heal = this->maxhealth - this->currenthealth;
 				}
+				cout << this->name << " healed for " << heal << " health." << endl;
+				this->currenthealth += heal;
 				temp = true;
 			}
 			return temp;
@@ -453,6 +547,7 @@ class Player
 		bool useManaPotion()
 		{
 			bool temp;
+			int heal;
 			
 			if(this->manapotion <= 0)
 			{
@@ -462,11 +557,13 @@ class Player
 			else
 			{
 				this->manapotion -= 1;
-				this->currentmana + this->maxmana * 0.25;
-				if(this->currentmana > this->maxmana)
+				heal = this->currentmana + this->maxmana * 0.25;
+				if(this->maxmana < this->currentmana + heal)
 				{
-					this->currentmana = this->maxmana;
+					heal = this->maxmana - this->currentmana;
 				}
+				cout << this->name << " restored " << heal << " mana." << endl;
+				this->currentmana += heal;
 				temp = true;
 			}
 			return temp;
