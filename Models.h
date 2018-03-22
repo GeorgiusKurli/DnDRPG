@@ -272,6 +272,7 @@ class Player
 			this->defense = defense;
 			this->healthpotion = 5;
 			this->manapotion = 3;
+			this->gold = 300;
 			
 			Skill temp;
 			temp.damage = 1;
@@ -394,6 +395,7 @@ class Player
 		{
 			this->gold = amount;
 		}
+		
 		void setExp(int amount)
 		{
 			this->exp = amount;

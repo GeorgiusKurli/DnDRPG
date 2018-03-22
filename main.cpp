@@ -7,6 +7,6 @@ int main() {
 	srand ( time(NULL) );
 	
 	Player player = IntroductionPhase();
-	BattlePhase(1,player);
+	city(player);
 
 }

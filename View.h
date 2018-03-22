@@ -197,10 +197,86 @@ void BattlePhase(int tier, Player player)
 			}
 		}
 		
+	}	
+}
+
+void inn(Player player){
+	bool running = true;
+	int choice;
+	char staying;
+	int inn_cost = 10;
+	cout << "Welcome to Low-Cost INN" << endl;
+	while(running){
+		cout << "What do you wanna do?" << endl;
+		cout << "1. Stay\n2. Back to city" << endl;
+		cin >> choice;
+		if(choice == 1){
+			cout << "Staying in here would cost 10 gold. Are you sure? Y/N" << endl;
+			cin >> staying;
+			if(staying == 'y' || staying == 'Y'){
+				if(player.getGold() >= inn_cost){
+					cout << "Thank you for your staying!" << endl;
+					player.setGold(player.getGold() - inn_cost);
+					player.setCurrentHealth(player.getMaxHealth());
+				}
+				else{
+					cout << "Pardon us, but you don't have enough gold at the moment" << endl;
+				}
+			}
+		}
+		else if(choice == 2){
+			cout << "Thank you for your patronage!" << endl;
+			running = false;
+		}
 	}
-	
-	
-	
-	
+}
+
+void city(Player player){
+	bool running = true;
+	int choice;
+	cout << "WELCOME TO JAPARI CITY!" << endl;
+	while(running){
+		cout << "Where do you wanna go to?" << endl;
+		cout << "1. Dungeon\n2. Inn\n3. Adventurer's shop\n4. Castle\n5. Exit" << endl;
+		cin >> choice;
+		if(choice == 1){
+			bool looping = true;
+			int dungeon_tier;
+			char choice1;
+			while(looping){
+				cout << "Which dungeon do you wanna go to?" << endl;
+				cout << "1. Ainground\n2. Aincrad\n3. Back" << endl;
+				cin >> dungeon_tier;
+				if(dungeon_tier == 1){
+					//dungeon(dungeon_tier, player);
+					looping = false;
+				}
+				else if(dungeon_tier == 2){
+					cout << "Are you sure you wanna go? this dungeon is recommended for lvl. 10+" << endl;
+					cout << "Y/N? ";
+					cin >> choice1;
+					if(choice1 == 'y' || choice1 == 'Y'){
+						//dungeon(dungeon_tier, player);
+						looping = false;
+					}
+				}
+				else if(dungeon_tier == 3){
+					looping = false;
+				}
+			}
+		}
+		else if(choice == 2){
+			inn(player);
+		}
+		else if(choice == 3){
+			//shop(player);
+		}
+		else if(choice == 4){
+			//castle(player);
+		}
+		else if(choice == 5){
+			running = false;
+		}
+	}
 }
 #endif
