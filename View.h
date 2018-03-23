@@ -2,7 +2,7 @@
 #define VIEW_H
 #include<iostream>
 #include<windows.h>
-#include<coino.h>
+#include<conio.h>
 #include"Controller.h"
 #include"Models.h"
 using namespace std;
@@ -29,7 +29,7 @@ Player IntroductionPhase()
 	return player;
 }
 
-void Story()
+void Story(Player player)
 {
 	cout << "Long time ago, in Markarth, there lived an alchemist named Geppetto." << endl;
 	cout << "One of his best creations was a living puppet, named " << player.getName() << "." << endl;
@@ -45,11 +45,13 @@ void Story()
 	cout << player.getName() << " accepted it and began his journey." << endl;
 }
 
-void BeforeBattle()
+void BeforeBattle(Player player)
 {
 	cout << player.getName() << " did his job. Geppetto asked him to hand over the Sword." << endl;
 	Sleep(1000);
-	cout << "He gave the Sword" << Sleep(1500) << " and the moment he wanted to give the Armor," << endl;
+	cout << "He gave the Sword";
+	Sleep(1500);
+	cout << " and the moment he wanted to give the Armor," << endl;
 	Sleep(1000);
 	cout << "Geppetto attacked " << player.getName() << "!" << endl;
 	Sleep(3500);
@@ -66,35 +68,37 @@ void BeforeBattle()
 	cout << "But no matter what, he should fight back in order to survive." << endl;
 }
 
-void AfterBattle(int boss)
+void AfterBattle(int boss, Player player)
 {
-	if (boss == 1)
+	if (boss == -1)
 	{
-		cout << player.getName() << " got Gutrender, Glory of Illuminated Dreams!" << endl;
+		cout << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
 		Sleep(1500);
-		cout << "But is this necessary? To kill MB1?" << endl;
+		cout << "But is this necessary? To kill Garland?" << endl;
 		Sleep(1500);
 		cout << player.getName() << " decided to keep his own doubt." << endl;
 	}
-	if (boss == 2)
+	if (boss == -2)
 	{
 		cout << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
 		Sleep(3000);
-		cout << "Geppetto assured him because MB2 was keeping Bastion of Hope," << endl;
+		cout << "Geppetto assured him because Lahabrea was keeping Bastion of Hope," << endl;
 		Sleep(1000);
 		cout << "a thing that will fulfill " << player.getName() << "'s purpose" << endl;
 		Sleep(2000);
 		cout << "There's no point on doubting yourself, Geppetto said." << endl;
 	}
-	if (boss == 3)
+	if (boss == -3)
 	{
-		cout << "Even " << player.getName() << " won the fight, he felt dying as well." << endl;
+		cout << "Even " << player.getName() << " won the fight, he felt inches away from death." << endl;
 		Sleep(4000);
 		cout << "There was a thing that " << player.getName() << " still didn't know..." << endl;
 		Sleep(4000);
 		cout << "Since he was Geppetto's puppet, Geppetto's creation..." << endl;
 		Sleep(4000);
-		cout << "Geppetto revealed that " << player.getName() << Sleep(3000) << " had his life tied to him." << endl;
+		cout << "Geppetto revealed that " << player.getName();
+		Sleep(3000);
+		cout << " had his life tied to him." << endl;
 		Sleep(5000);
 		cout << "\nIn the end, " << player.getName() << " died along with Geppetto." << endl;
 	}
@@ -103,8 +107,20 @@ void AfterBattle(int boss)
 void BattlePhase(int tier, Player player)
 {
 	Monster enemy(tier);
+	if(tier == -3)
+	{
+		BeforeBattle(player);
+	}
 	int randint;
-	cout << "A " << enemy.getName() << " appeared! " << endl;
+	if(tier > 0)
+	{
+		cout << "A " << enemy.getName() << " appeared! " << endl;
+	}
+	
+	else
+	{
+		cout << enemy.getName() << endl;
+	}
 	cout << "Level: " << enemy.getLevel() << endl;
 	string input;
 	
@@ -271,7 +287,11 @@ void BattlePhase(int tier, Player player)
 			
 			if(enemy.getCurrentHealth() <= 0)
 			{
-				cout << enemy.getName() << " has been slain!" << endl;
+				cout << enemy.getName() << " has been killed." << endl;
+				if(tier < 0)
+				{
+					AfterBattle(tier,player)
+				}
 				battleflag = false;
 				
 				cout << "You get " << to_string(enemy.getGoldDrop()) << " gold and " << to_string(enemy.getExpDrop()) << " exp." << endl;

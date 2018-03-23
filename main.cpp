@@ -7,11 +7,10 @@ int main() {
 	srand ( time(NULL) );
 	
 	Player player = IntroductionPhase();
-	Story();
+	Story(player);
 
 
 	//battle testing bosses
-//	Player player("BEPIS",1,20,100,3,3, 3);
 //	for(int x = 0; x<10; x++)
 //	{
 //		player.setExp(1000);
