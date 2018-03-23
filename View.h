@@ -11,19 +11,23 @@ Player IntroductionPhase()
 {
 	string input,name;
 	cout << "Welcome" << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << "Please tell us your name." << endl;
 	cin >> input;
 	if(input == "no" || input == "No"){
 		name = "Pinocchio";
 		cout << "Not much into names are we? Well then, I will call you Pinocchio." << endl;
+		Sleep(3000);
+		system("CLS");
 	}
 	else
 	{
 		name = input;
 		cout << "Welcome to the world " + name << endl;
-		Sleep(1000);
+		Sleep(3000);
 		cout << "Lets get started." << endl;
+		Sleep(3000);
+		system("CLS");
 	}
 	Player player(name,1,20,100,3,3, 3);
 	return player;
@@ -32,65 +36,78 @@ Player IntroductionPhase()
 void Story(Player player)
 {
 	cout << "Long time ago, in Markarth, there lived an alchemist named Geppetto." << endl;
+	Sleep(3000);
 	cout << "One of his best creations was a living puppet, named " << player.getName() << "." << endl;
-	Sleep(1500);
+	Sleep(3000);
 	cout << "One day, " << player.getName() << " had this question which was bugging him." << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << "Why was he different from Geppetto?" << endl;
 	Sleep(3000);
 	cout << "He didn't want to be different; he wanted to be same as his Father." << endl;
-	Sleep(1000);
-	cout << "Geppetto said that he could change " << player.getName() << " into human but the condition was difficult." << endl;
-	Sleep(1000);
+	Sleep(3000);
+	cout << "Geppetto said that he could change " << player.getName() << " into human, " << endl;
+	Sleep(3000);
+	cout << "but the condition was difficult." << endl;
+	Sleep(3000);
 	cout << player.getName() << " accepted it and began his journey." << endl;
+	Sleep(5000);
+	system("CLS");
 }
 
 void BeforeBattle(Player player)
 {
-	cout << player.getName() << " did his job. Geppetto asked him to hand over the Sword." << endl;
-	Sleep(1000);
+	cout << "\n" <<player.getName() << " did his job. Geppetto asked him to hand over the Sword." << endl;
+	Sleep(3000);
 	cout << "He gave the Sword";
-	Sleep(1500);
+	Sleep(3000);
 	cout << " and the moment he wanted to give the Armor," << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << "Geppetto attacked " << player.getName() << "!" << endl;
 	Sleep(3500);
 	cout << "Fortunately, the Armor reacted to it and saved " << player.getName() << "." << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << player.getName() << " was shocked and felt betrayed over the sudden attack from Geppetto." << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << "Why? Why would he do this?" << endl;
 	Sleep(3000);
-	cout << "It turned out " << player.getName() << " was only just a pawn for Geppetto in order to obtain The Legendary Items." << endl;
+	cout << "It turned out " << player.getName() << " was only just a pawn for Geppetto" << endl;
+	cout << "in order to obtain The Legendary Items." << endl;
 	cout << "Geppetto lied about turning into human in order to make it easier to manipulate him." << endl;
-	Sleep(1000);
+	Sleep(3000);
 	cout << player.getName() << " was felt despair and sadness over the betrayal of his most beloved Father." << endl;
+	Sleep(3000);
 	cout << "But no matter what, he should fight back in order to survive." << endl;
+	Sleep(5000);
+	system("CLS");
 }
 
 void AfterBattle(int boss, Player player)
 {
 	if (boss == -1)
 	{
-		cout << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
-		Sleep(1500);
+		cout << "\n" << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
+		Sleep(3000);
 		cout << "But is this necessary? To kill Garland?" << endl;
-		Sleep(1500);
+		Sleep(3000);
 		cout << player.getName() << " decided to keep his own doubt." << endl;
+		Sleep(5000);
+		system("CLS");
 	}
 	if (boss == -2)
 	{
-		cout << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
+		cout << "\n" << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
 		Sleep(3000);
 		cout << "Geppetto assured him because Lahabrea was keeping Bastion of Hope," << endl;
-		Sleep(1000);
+		Sleep(3000);
 		cout << "a thing that will fulfill " << player.getName() << "'s purpose" << endl;
-		Sleep(2000);
+		Sleep(3000);
 		cout << "There's no point on doubting yourself, Geppetto said." << endl;
+		Sleep(5000);
+		system("CLS");
 	}
 	if (boss == -3)
 	{
-		cout << "Even " << player.getName() << " won the fight, he felt inches away from death." << endl;
+		cout << "\nEven " << player.getName() << " won the fight, he felt inches away from death." << endl;
 		Sleep(4000);
 		cout << "There was a thing that " << player.getName() << " still didn't know..." << endl;
 		Sleep(4000);
@@ -99,8 +116,9 @@ void AfterBattle(int boss, Player player)
 		cout << "Geppetto revealed that " << player.getName();
 		Sleep(3000);
 		cout << " had his life tied to him." << endl;
-		Sleep(5000);
+		Sleep(6000);
 		cout << "\nIn the end, " << player.getName() << " died along with Geppetto." << endl;
+		Sleep(5000);
 	}
 }
 
