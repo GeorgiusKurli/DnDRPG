@@ -35,6 +35,8 @@ Player IntroductionPhase()
 
 void Story(Player player)
 {
+	system("CLS");
+	Sleep(3000);	
 	cout << "Long time ago, in Markarth, there lived an alchemist named Geppetto." << endl;
 	Sleep(3000);
 	cout << "One of his best creations was a living puppet, named " << player.getName() << "." << endl;
@@ -56,6 +58,8 @@ void Story(Player player)
 
 void BeforeBattle(Player player)
 {
+	system("CLS");
+	Sleep(3000);	
 	cout << "\n" <<player.getName() << " did his job. Geppetto asked him to hand over the Sword." << endl;
 	Sleep(3000);
 	cout << "He gave the Sword";
@@ -85,6 +89,8 @@ void AfterBattle(int boss, Player player)
 {
 	if (boss == -1)
 	{
+		system("CLS");
+		Sleep(3000);	
 		cout << "\n" << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
 		Sleep(3000);
 		cout << "But is this necessary? To kill Garland?" << endl;
@@ -95,6 +101,8 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -2)
 	{
+		system("CLS");
+		Sleep(3000);	
 		cout << "\n" << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
 		Sleep(3000);
 		cout << "Geppetto assured him because Lahabrea was keeping Bastion of Hope," << endl;
@@ -107,6 +115,8 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -3)
 	{
+		system("CLS");
+		Sleep(3000);	
 		cout << "\nEven " << player.getName() << " won the fight, he felt inches away from death." << endl;
 		Sleep(4000);
 		cout << "There was a thing that " << player.getName() << " still didn't know..." << endl;
@@ -223,7 +233,7 @@ Player BattlePhase(int tier, Player player)
 				
 				case 3:
 				{
-					if(tier < 0)
+					if(tier > 0)
 					{
 						chooseoption = false;
 						battleflag = false;
@@ -488,6 +498,11 @@ Player dungeon(int tier, Player player){
 					}
 				}
 				break;
+		}
+		
+		if(player.getCurrentHealth() <= 0)
+		{
+			running = false;
 		}
 	}
 	return player;
@@ -875,6 +890,11 @@ void city(Player player){
 			//castle(player);
 		}
 		else if(choice == 5){
+			running = false;
+		}
+		
+		if(player.getCurrentHealth() <= 0)
+		{
 			running = false;
 		}
 	}
