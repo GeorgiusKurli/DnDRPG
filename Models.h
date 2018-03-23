@@ -507,7 +507,7 @@ class Player
 			this->playerarmor = temparmor;
 			
 			Skill temp;
-			temp.damage = 1;
+			temp.damage = 99999;
 			temp.manacost = 0;
 			temp.name = "Strike";
 			this->skill_list[0] = temp;

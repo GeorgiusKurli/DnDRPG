@@ -89,9 +89,10 @@ void AfterBattle(int boss, Player player)
 {
 	if (boss == -1)
 	{
+		Sleep(5000);
 		system("CLS");
 		Sleep(3000);	
-		cout << "\n" << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
+		cout << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
 		Sleep(3000);
 		cout << "But is this necessary? To kill Garland?" << endl;
 		Sleep(3000);
@@ -101,9 +102,10 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -2)
 	{
+		Sleep(5000);
 		system("CLS");
 		Sleep(3000);	
-		cout << "\n" << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
+		cout << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
 		Sleep(3000);
 		cout << "Geppetto assured him because Lahabrea was keeping Bastion of Hope," << endl;
 		Sleep(3000);
@@ -115,9 +117,10 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -3)
 	{
+		Sleep(5000);
 		system("CLS");
 		Sleep(3000);	
-		cout << "\nEven " << player.getName() << " won the fight, he felt inches away from death." << endl;
+		cout << "Even " << player.getName() << " won the fight, he felt inches away from death." << endl;
 		Sleep(4000);
 		cout << "There was a thing that " << player.getName() << " still didn't know..." << endl;
 		Sleep(4000);
