@@ -3,7 +3,7 @@
 
 struct Skill
 {
-	int damage;
+	float damage;
 	int manacost;
 	string name;
 };
@@ -49,6 +49,72 @@ class Monster
 				this->golddrop = level + rand()%10 + 100;
 			}
 			
+			if(tier == 2)
+			{
+				int enemyname = rand()%2;
+				
+				if(enemyname == 0)
+				{
+					this->name = "Tiger";
+				}
+				
+				else if(enemyname == 1)
+				{
+					this->name = "Raptor";
+				}
+				
+				this->tier = 2;
+				this->level = rand()%9 + 11;
+				this->maxhealth = level * (rand()%2 + 3);
+				this->currenthealth = maxhealth;
+				this->strength = level + rand()%3 + 1;
+				this->speed = level + rand()%4 +1;
+				this->defense = level + rand()%3;
+				this->expdrop = level * 2 + rand()%10;
+				this->golddrop = level + rand()%10 + 100;
+			}
+			
+			else if(tier == -1)
+			{
+				this->name = "Garland";
+				this->tier = -1;
+				this->level = 999999;
+				this->maxhealth = 100;
+				this->currenthealth = maxhealth;
+				this->strength = 50;
+				this->speed = 1;
+				this->defense = 1;
+				this->expdrop = 200;
+				this->golddrop = 500;
+			}
+			
+			else if(tier == -2)
+			{
+				this->name = "Lahabrea";
+				this->tier = -2;
+				this->level = 99999;
+				this->maxhealth = 200;
+				this->currenthealth = maxhealth;
+				this->strength = 16;
+				this->speed = 1;
+				this->defense = 50;
+				this->expdrop = 300;
+				this->golddrop = 1000;
+			}
+			
+			else if(tier == -3)
+			{
+				this->name = "Geppetto";
+				this->tier = -3;
+				this->level = 0;
+				this->maxhealth = 500;
+				this->currenthealth = maxhealth;
+				this->strength = 50;
+				this->speed = 1;
+				this->defense = 20;
+				this->expdrop = 500;
+				this->golddrop = 100000;
+			}
 		}
 		
 		string getName()
@@ -145,9 +211,35 @@ class Weapon
 				this->value = level * 25 + strength * 50;
 			}
 			
+			if(tier == 2)
+			{
+				
+				int name = rand()%3;
+				
+				if(name == 0)
+				{
+					this->name = "Steel Scimitar";
+				}
+				
+				else if(name == 1)
+				{
+					this->name = "Steel Broadsword";
+				}
+				
+				else if(name == 3)
+				{
+					this->name = "Steel Rapier";
+				}
+				
+				this->tier = tier;
+				this->level = level;
+				this->strength = level + rand()%5 + 3;
+				this->value = level * 25 + strength * 50;
+			}
+			
 			else if(tier == -1)
 			{
-				this->name = "Sword of Humanity";
+				this->name = "Gut Render";
 				this->tier = 999999;
 				this->level = 999999;
 				this->strength = 50;
@@ -166,9 +258,18 @@ class Weapon
 				this->value = level * 25 + strength * 50;
 			}
 			
+			if(tier == 2)
+			{
+				this->name = name;
+				this->tier = tier;
+				this->level = level;
+				this->strength = level + rand()%5 + 3;
+				this->value = level * 25 + strength * 50;
+			}
+			
 			else if(tier == -1)
 			{
-				this->name = "Sword of Humanity";
+				this->name = "Gut Render";
 				this->tier = 999999;
 				this->level = 999999;
 				this->strength = 50;
@@ -242,13 +343,35 @@ class Armor
 				this->tier = tier;
 				this->level = level;
 				this->speed = level + rand()%3 + 1;
-				this->defense = level + rand()%5;
+				this->defense = level + rand()%5 + 2;
+				this->value = level * 25 + defense * 50 + speed * 75;
+			}
+			
+			if(tier == 2)
+			{
+				
+				int name = rand()%2;
+				
+				if(name == 0)
+				{
+					this->name = "Mithril Chainmail";
+				}
+				
+				else if(name == 1)
+				{
+					this->name = "Steel Plating";
+				}
+				
+				this->tier = tier;
+				this->level = level;
+				this->speed = level + rand()%3 + 3;
+				this->defense = level + rand()%5 + 5;
 				this->value = level * 25 + defense * 50 + speed * 75;
 			}
 			
 			else if(tier == -1)
 			{
-				this->name = "Armor of Souls";
+				this->name = "Bastion of Hope";
 				this->tier = 999999;
 				this->level = 999999;
 				this->speed = 50;
@@ -265,13 +388,27 @@ class Armor
 				this->tier = tier;
 				this->level = level;
 				this->speed = level + rand()%3 + 1;
-				this->defense = level + rand()%5;
+				this->defense = level + rand()%5 + 2;
+				this->value = level * 25 + defense * 50 + speed * 75;
+			}
+			
+			if(tier == 2)
+			{
+				
+				int name = rand()%2;
+				
+				this->name = name;
+				
+				this->tier = tier;
+				this->level = level;
+				this->speed = level + rand()%3 + 3;
+				this->defense = level + rand()%5 + 5;
 				this->value = level * 25 + defense * 50 + speed * 75;
 			}
 			
 			else if(tier == -1)
 			{
-				this->name = "Armor of Souls";
+				this->name = "Bastion of Hope";
 				this->tier = 999999;
 				this->level = 999999;
 				this->speed = 50;
@@ -340,7 +477,7 @@ class Player
 		int manapotion;
 		Weapon playerweapon;
 		Armor playerarmor;
-		Skill skill_list[10];
+		Skill skill_list[5];
 		
 		int skillamount;
 		
@@ -356,6 +493,7 @@ class Player
 			this->strength = strength;
 			this->speed = speed;
 			this->defense = defense;
+			this->exp = 0;
 			this->healthpotion = 5;
 			this->manapotion = 3;
 			this->gold = 300;
@@ -371,7 +509,12 @@ class Player
 			temp.manacost = 0;
 			temp.name = "Strike";
 			this->skill_list[0] = temp;
-			this->skillamount = 1;
+			
+			temp.damage = 1.2;
+			temp.manacost = 10;
+			temp.name = "Power Strike";
+			this->skill_list[1] = temp;
+			this->skillamount = 2;
 			
 
 		}
@@ -518,6 +661,17 @@ class Player
 			this->exp = amount;
 		}
 		
+		void setHealthPotion(int amount)
+		{
+			this->healthpotion = amount;
+		}
+		
+		void setManaPotion(int amount)
+		{
+			this->manapotion = amount;
+		}
+		
+		
 		void setWeapon(Weapon tempweapon)
 		{
 			this->playerweapon = tempweapon;
@@ -536,7 +690,7 @@ class Player
 				cout << "Exp: " << this->exp << "/" << level * 5 + 5 << endl;
 				if(this->exp >= level * 5 + 5)
 				{
-					this->exp = 0;
+					this->exp = this->exp - level*5+5;
 					cout << this->name << " has levelled up!" << endl;
 					this->level = this->level + 1;
 					this->maxhealth += 5;
@@ -544,17 +698,36 @@ class Player
 					this->currentmana = maxmana;
 					
 					tempstat = (1 + rand()%2);
-					cout << "Strength increased by = " << to_string(tempstat) << endl;
+					cout << "Strength increased by = " << tempstat << endl;
 					this->strength += tempstat;
 					
-					cout << "Speed increased by = " << to_string(tempstat) << endl;
+					cout << "Speed increased by = " << tempstat << endl;
 					tempstat = (1 + rand()%2);
 					this->speed += tempstat;
 					
-					cout << "Defense increased by = " << to_string(tempstat) << endl;
+					cout << "Defense increased by = " << tempstat << endl;
 					tempstat = (1 + rand()%2);
 					this->defense += tempstat;
 						
+					if(this->level == 10)
+					{
+						Skill tempskill;
+						tempskill.damage = 2;
+						tempskill.manacost = 25;
+						tempskill.name = "Fatal Stab";
+						this->skill_list[skillamount] = tempskill;
+						this->skillamount += 1;
+					}
+					
+					if(this->level == 20)
+					{
+						Skill tempskill;
+						tempskill.damage = 3.5;
+						tempskill.manacost = 35;
+						tempskill.name = "Flare Blade";
+						this->skill_list[skillamount] = tempskill;
+						this->skillamount += 1;
+					}
 				}	
 			}
 		}
@@ -572,7 +745,7 @@ class Player
 			else
 			{
 				this->healthpotion -= 1;
-				heal = this->currenthealth + this->maxhealth * 0.25;
+				heal = this->maxhealth * 0.25;
 				if(this->maxhealth < this->currenthealth + heal)
 				{
 					heal = this->maxhealth - this->currenthealth;
@@ -597,7 +770,7 @@ class Player
 			else
 			{
 				this->manapotion -= 1;
-				heal = this->currentmana + this->maxmana * 0.25;
+				heal = this->maxmana * 0.5;
 				if(this->maxmana < this->currentmana + heal)
 				{
 					heal = this->maxmana - this->currentmana;

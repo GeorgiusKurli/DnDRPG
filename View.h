@@ -48,6 +48,8 @@ void BattlePhase(int tier, Player player)
 	int damage;
 	Skill tempskill;
 	
+	int counter = 0;
+	
 	while (battleflag){
 		
 		chooseoption = true;
@@ -79,7 +81,7 @@ void BattlePhase(int tier, Player player)
 				case 2:
 				{
 					tempbool = false;
-					cout << "You have " << to_string(player.getHealthPotion()) << " health potion and " << to_string(player.getManaPotion()) << "mana potion." << endl;
+					cout << "You have " << to_string(player.getHealthPotion()) << " health potion and " << to_string(player.getManaPotion()) << " mana potion." << endl;
 					cout << "1.Health Potion 2. Mana Potion 3. Back" << endl;
 					cin >> input;
 					
@@ -186,6 +188,13 @@ void BattlePhase(int tier, Player player)
 				
 			}
 			
+			if(counter == 0 && enemy.getTier() == -1 && player.getCurrentHealth() <= 0)
+			{
+				cout << player.getName() << " Resisted Death!" << endl;
+				player.setCurrentHealth(1);
+				counter += 1;
+			}
+			
 			if(enemy.getCurrentHealth() <= 0)
 			{
 				cout << enemy.getName() << " has been slain!" << endl;
@@ -198,9 +207,42 @@ void BattlePhase(int tier, Player player)
 				
 				randint = rand()%100+1;
 				
+				if(enemy.getTier() == -1)
+				{
+					Weapon tempweapon(-1,999999,"Gut Render");
+					player.setWeapon(tempweapon);
+					cout << player.getName() << " found " << tempweapon.getName() << endl;
+					tempweapon.printStats();
+					randint = 0;
+				}
+
+				if(enemy.getTier() == -2)
+				{
+					Armor temparmor(-1,999999,"Bastion of Hope");
+					player.setArmor(temparmor);
+					cout << player.getName() << " found " << temparmor.getName() << endl;
+					temparmor.printStats();
+					randint = 0;
+				}
+				
+				
 				if(randint > 40)
 				{
-					randint = rand()%2;
+					if((player.getWeapon()).getName() == "Gut Render")
+					{
+						randint = 1;
+					}
+					
+					else if((player.getArmor()).getName() == "Bastion of Hope")
+					{
+						randint = 2;
+					}
+					
+					else
+					{
+						randint = rand()%2;
+					}
+					
 					if(randint == 0)
 					{
 						Weapon tempweapon(enemy.getTier(),enemy.getLevel());
@@ -265,6 +307,7 @@ void dungeon(int tier, Player player){
 				}
 				else{
 					player.setCurrentHealth(player.getMaxHealth());
+					player.setCurrentMana(player.getMaxMana());
 				}
 				break;
 			case 3:
@@ -292,6 +335,7 @@ void inn(Player player){
 					cout << "Thank you for your staying!" << endl;
 					player.setGold(player.getGold() - inn_cost);
 					player.setCurrentHealth(player.getMaxHealth());
+					player.setCurrentMana(player.getMaxMana());
 				}
 				else{
 					cout << "Pardon us, but you don't have enough gold at the moment" << endl;
@@ -320,15 +364,15 @@ void shop(Player player){
 				cout << "What do you wanna buy?" << endl;
 				cout << "1. Armor\n2. Weapon\n3. Back" << endl;
 				cin >> choice1;
-				if(player.getWeapon().getName() == "Sword of Humanity" && choice1 == 1)
+				if(player.getWeapon().getName() == "Gut Render" && choice1 == 1)
 				{
-					cout << "You do not need to replace " << player.getWeapon().getName() << endl
+					cout << "You do not need to replace " << player.getWeapon().getName() << endl;
 					choice1 = 3;
 				}
 				
-				if(player.getArmor().getName() == "Armor of Souls" && choice1 == 2)
+				if(player.getArmor().getName() == "Bastion of Hope" && choice1 == 2)
 				{
-					cout << "You do not need to replace " << player.getArmor().getName() << endl
+					cout << "You do not need to replace " << player.getArmor().getName() << endl;
 					choice1 = 3;
 				}
 				
