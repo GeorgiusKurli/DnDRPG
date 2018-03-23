@@ -7,7 +7,7 @@ int main() {
 	srand ( time(NULL) );
 	
 	Player player = IntroductionPhase();
-	city(player);
+	Story();
 
 
 	//battle testing bosses
