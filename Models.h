@@ -187,7 +187,7 @@ class Weapon
 		
 		void printStats()
 		{
-			cout << "Level" << this->level << endl;
+			cout << "Level: " << this->level << endl;
 			cout << "Strength: " << this->strength << endl;
 			cout << "Value: " << this->value << endl;
 		}
@@ -495,8 +495,10 @@ class Player
 			int tempstat;
 			if((this->level >= 30) == false)
 			{
+				cout << "Exp: " << this->exp << "/" << level * 5 + 5 << endl;
 				if(this->exp >= level * 5 + 5)
 				{
+					this->exp = 0;
 					cout << this->name << " has levelled up!" << endl;
 					this->level = this->level + 1;
 					this->maxhealth += 5;

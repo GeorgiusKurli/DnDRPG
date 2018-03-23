@@ -55,7 +55,7 @@ void BattlePhase(int tier, Player player)
 		{
 			cout << player.getName() << "'s Health: " << player.getCurrentHealth() << "/" << player.getMaxHealth() << endl;
 			cout << player.getName() << "'s mana: " << player.getCurrentMana() << "/" << player.getMaxMana() << endl;
-			cout << enemy.getName() << "'s Health: " << enemy.getCurrentHealth() << endl;
+			cout << enemy.getName() << "'s Health: " << enemy.getCurrentHealth() << "/" << enemy.getMaxHealth() << endl;
 			
 			cout << ("1.Fight\n2.Potion\n3.Run") << endl;
 			cin >> input;
@@ -116,7 +116,6 @@ void BattlePhase(int tier, Player player)
 					chooseoption = false;
 					battleflag = false;
 					exitflag = true;
-					continue;
 					break;
 				}
 				
@@ -193,6 +192,8 @@ void BattlePhase(int tier, Player player)
 				battleflag = false;
 				
 				cout << "You get " << to_string(enemy.getGoldDrop()) << " gold and " << to_string(enemy.getExpDrop()) << " exp." << endl;
+				player.setGold(player.getGold() + enemy.getGoldDrop());
+				player.setExp(player.getExp() + enemy.getExpDrop());
 				player.checklevelUp();
 				
 				randint = rand()%100+1;
@@ -206,7 +207,7 @@ void BattlePhase(int tier, Player player)
 						cout << player.getName() << " found " << tempweapon.getName() << endl;
 						tempweapon.printStats();
 						cout << "Do you want to replace your current weapon?(y/n)" << endl;
-						cout << "Current Weapon: " << player.getWeapon().getName();
+						cout << "Current Weapon: " << player.getWeapon().getName() << endl;
 						player.getWeapon().printStats();
 						
 						cin >> input;
@@ -223,7 +224,7 @@ void BattlePhase(int tier, Player player)
 						cout << player.getName() << " found " << temparmor.getName() << endl;
 						temparmor.printStats();
 						cout << "Do you want to replace your current armor?(y/n)" << endl;
-						cout << "Current Armor: " << player.getArmor().getName();
+						cout << "Current Armor: " << player.getArmor().getName() << endl;
 						player.getArmor().printStats();
 						
 						cin >> input;
@@ -298,7 +299,7 @@ void city(Player player){
 				}
 				else if(dungeon_tier == 2){
 					cout << "Are you sure you wanna go? this dungeon is recommended for lvl. 10+" << endl;
-					cout << "Y/N? ";
+					cout << "Y/N? " << endl;
 					cin >> choice1;
 					if(choice1 == 'y' || choice1 == 'Y'){
 						//dungeon(dungeon_tier, player);
