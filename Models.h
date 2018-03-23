@@ -84,7 +84,7 @@ class Monster
 				this->strength = 50;
 				this->speed = 1;
 				this->defense = 1;
-				this->expdrop = 200;
+				this->expdrop = 100;
 				this->golddrop = 500;
 			}
 			
@@ -93,12 +93,12 @@ class Monster
 				this->name = "Lahabrea";
 				this->tier = -2;
 				this->level = 99999;
-				this->maxhealth = 200;
+				this->maxhealth = 400;
 				this->currenthealth = maxhealth;
-				this->strength = 16;
+				this->strength = 18;
 				this->speed = 1;
-				this->defense = 50;
-				this->expdrop = 300;
+				this->defense = 60;
+				this->expdrop = 200;
 				this->golddrop = 1000;
 			}
 			
@@ -106,12 +106,12 @@ class Monster
 			{
 				this->name = "Geppetto";
 				this->tier = -3;
-				this->level = 0;
+				this->level = 999999;
 				this->maxhealth = 500;
 				this->currenthealth = maxhealth;
-				this->strength = 50;
+				this->strength = 70;
 				this->speed = 1;
-				this->defense = 20;
+				this->defense = 30;
 				this->expdrop = 500;
 				this->golddrop = 100000;
 			}
@@ -475,6 +475,7 @@ class Player
 		int exp;
 		int healthpotion;
 		int manapotion;
+		int bosskillcount;
 		Weapon playerweapon;
 		Armor playerarmor;
 		Skill skill_list[5];
@@ -497,6 +498,7 @@ class Player
 			this->healthpotion = 5;
 			this->manapotion = 3;
 			this->gold = 300;
+			this->bosskillcount = 0;
 			
 			Weapon tempweapon(1,1,"Beginner Sword");
 			this->playerweapon = tempweapon;
@@ -588,6 +590,11 @@ class Player
 			return this->exp;
 		}
 		
+		int getBossKillCount()
+		{
+			return this->bosskillcount;
+		}
+		
 		int getHealthPotion()
 		{
 			return this->healthpotion;
@@ -661,6 +668,11 @@ class Player
 			this->exp = amount;
 		}
 		
+		void setBossKillCount(int amount)
+		{
+			this->bosskillcount = amount;
+		}
+		
 		void setHealthPotion(int amount)
 		{
 			this->healthpotion = amount;
@@ -685,49 +697,52 @@ class Player
 		void checklevelUp()
 		{
 			int tempstat;
+			
 			if((this->level >= 30) == false)
 			{
 				cout << "Exp: " << this->exp << "/" << level * 5 + 5 << endl;
-				if(this->exp >= level * 5 + 5)
+			}
+			
+			while((this->level >= 30) == false && (this->exp >= level * 5 + 5 ))
+			{
+				this->exp = this->exp - level*5+5;
+				cout << this->name << " has levelled up!" << endl;
+				this->level = this->level + 1;
+				this->maxhealth += 5;
+				this->currenthealth = maxhealth;
+				this->currentmana = maxmana;
+				
+				tempstat = (1 + rand()%2);
+				cout << "Strength increased by = " << tempstat << endl;
+				this->strength += tempstat;
+				
+				cout << "Speed increased by = " << tempstat << endl;
+				tempstat = (1 + rand()%2);
+				this->speed += tempstat;
+				
+				cout << "Defense increased by = " << tempstat << endl;
+				tempstat = (1 + rand()%2);
+				this->defense += tempstat;
+				
+				if(this->level == 10)
 				{
-					this->exp = this->exp - level*5+5;
-					cout << this->name << " has levelled up!" << endl;
-					this->level = this->level + 1;
-					this->maxhealth += 5;
-					this->currenthealth = maxhealth;
-					this->currentmana = maxmana;
+					Skill tempskill;
+					tempskill.damage = 2;
+					tempskill.manacost = 25;
+					tempskill.name = "Fatal Stab";
+					this->skill_list[skillamount] = tempskill;
+					this->skillamount += 1;
+				}
 					
-					tempstat = (1 + rand()%2);
-					cout << "Strength increased by = " << tempstat << endl;
-					this->strength += tempstat;
+				if(this->level == 25)
+				{
+					Skill tempskill;
+					tempskill.damage = 3.5;
+					tempskill.manacost = 35;
+					tempskill.name = "Flare Blade";
+					this->skill_list[skillamount] = tempskill;
+					this->skillamount += 1;
 					
-					cout << "Speed increased by = " << tempstat << endl;
-					tempstat = (1 + rand()%2);
-					this->speed += tempstat;
-					
-					cout << "Defense increased by = " << tempstat << endl;
-					tempstat = (1 + rand()%2);
-					this->defense += tempstat;
-						
-					if(this->level == 10)
-					{
-						Skill tempskill;
-						tempskill.damage = 2;
-						tempskill.manacost = 25;
-						tempskill.name = "Fatal Stab";
-						this->skill_list[skillamount] = tempskill;
-						this->skillamount += 1;
-					}
-					
-					if(this->level == 20)
-					{
-						Skill tempskill;
-						tempskill.damage = 3.5;
-						tempskill.manacost = 35;
-						tempskill.name = "Flare Blade";
-						this->skill_list[skillamount] = tempskill;
-						this->skillamount += 1;
-					}
 				}	
 			}
 		}

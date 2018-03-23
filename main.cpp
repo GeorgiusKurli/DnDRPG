@@ -8,6 +8,14 @@ int main() {
 	
 	Player player = IntroductionPhase();
 	Story(player);
+	
+//	for(int x = 0; x<10; x++)
+//	{
+//		player.setExp(1000);
+//		player.checklevelUp();
+//	}
+	
+	city(player);
 
 
 	//battle testing bosses

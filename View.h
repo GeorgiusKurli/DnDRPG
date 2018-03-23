@@ -104,7 +104,7 @@ void AfterBattle(int boss, Player player)
 	}
 }
 
-void BattlePhase(int tier, Player player)
+Player BattlePhase(int tier, Player player)
 {
 	Monster enemy(tier);
 	if(tier == -3)
@@ -205,9 +205,17 @@ void BattlePhase(int tier, Player player)
 				
 				case 3:
 				{
-					chooseoption = false;
-					battleflag = false;
-					exitflag = true;
+					if(tier < 0)
+					{
+						chooseoption = false;
+						battleflag = false;
+						exitflag = true;	
+					}
+					else
+					{
+						cout << "You cannot run from a boss battle." << endl;
+					}
+					
 					break;
 				}
 				
@@ -290,7 +298,7 @@ void BattlePhase(int tier, Player player)
 				cout << enemy.getName() << " has been killed." << endl;
 				if(tier < 0)
 				{
-					AfterBattle(tier,player)
+					AfterBattle(tier,player);
 				}
 				battleflag = false;
 				
@@ -308,6 +316,7 @@ void BattlePhase(int tier, Player player)
 					cout << player.getName() << " found " << tempweapon.getName() << endl;
 					tempweapon.printStats();
 					randint = 0;
+					player.setBossKillCount(player.getBossKillCount() + 1);
 				}
 
 				if(enemy.getTier() == -2)
@@ -317,6 +326,7 @@ void BattlePhase(int tier, Player player)
 					cout << player.getName() << " found " << temparmor.getName() << endl;
 					temparmor.printStats();
 					randint = 0;
+					player.setBossKillCount(player.getBossKillCount() + 1);
 				}
 				
 				
@@ -380,24 +390,34 @@ void BattlePhase(int tier, Player player)
 		}
 		
 	}	
+	return player;
 }
 
-void dungeon(int tier, Player player){
+Player dungeon(int tier, Player player){
 	bool running = true;
 	int choice;
 	while(running){
 		int chance = rand()%10+1;
 		cout << "What do you want to do?" << endl;
-		cout << "1. Battle\n2. Camp\n3. Back to city" << endl;
+		cout << "1. Battle\n2. Camp \n3. Back to city" ;
+		if(player.getBossKillCount() == 0 && tier == 1)
+		{
+			cout << "\n4. Fight Garland";
+		}
+		else if(player.getBossKillCount() == 1 && tier == 2)
+		{
+			cout << "\n4. Fight Lahabrea";
+		}
+		cout << endl;
 		cin >> choice;
 		switch(choice){
 			case 1:
-				BattlePhase(tier,player);
+				player = BattlePhase(tier,player);
 				break;
 			case 2:
 				cout << "Resting...." << endl;
 				if(chance <= 2){
-					BattlePhase(tier, player);
+					player = BattlePhase(tier, player);
 				}
 				else{
 					player.setCurrentHealth(player.getMaxHealth());
@@ -407,11 +427,55 @@ void dungeon(int tier, Player player){
 			case 3:
 				running = false;
 				break;
+				
+			case 4:
+				string input;
+				if(player.getBossKillCount() == 0 && tier == 1)
+				{
+					if(player.getLevel() < 10)
+					{
+						cout << "Recommended lvl 10 to beat Garland. Are you sure you want to continue?(y/n)" << endl;
+						cin >> input;
+						if(input == "y")
+						{
+							player = BattlePhase(-1,player);
+						}
+					}
+					else
+					{
+						player = BattlePhase(-1,player);
+					}
+				}
+				
+				else if(player.getBossKillCount() == 1 && tier == 2)
+				{
+					if(player.getLevel() < 20)
+					{
+						cout << "Recommended lvl 25 to beat Lahabrea. Are you sure you want to continue?(y/n)" << endl;
+						cin >> input;
+						if(input == "y")
+						{
+							player = BattlePhase(-2,player);
+							player.setCurrentHealth(player.getMaxHealth());
+							player.setCurrentMana(player.getCurrentMana());
+							player = BattlePhase(-3,player);
+						}
+					}
+					else
+					{
+						player = BattlePhase(-2,player);
+						player.setCurrentHealth(player.getMaxHealth());
+						player.setCurrentMana(player.getCurrentMana());
+						player = BattlePhase(-3,player);
+					}
+				}
+				break;
 		}
 	}
+	return player;
 }
 
-void inn(Player player){
+Player inn(Player player){
 	bool running = true;
 	int choice;
 	char staying;
@@ -441,9 +505,11 @@ void inn(Player player){
 			running = false;
 		}
 	}
+	
+	return player;
 }
 
-void shop(Player player){
+Player shop(Player player){
 	bool running = true;
 	int choice;
 	cout << "Welcome to Adventurer's shop!'" << endl;
@@ -744,6 +810,7 @@ void shop(Player player){
 			running = false;
 		}
 	}
+	return player;
 }
 
 void city(Player player){
@@ -763,7 +830,7 @@ void city(Player player){
 				cout << "1. Ainground\n2. Aincrad\n3. Back" << endl;
 				cin >> dungeon_tier;
 				if(dungeon_tier == 1){
-					dungeon(dungeon_tier, player);
+					player = dungeon(dungeon_tier, player);
 					looping = false;
 				}
 				else if(dungeon_tier == 2){
@@ -771,7 +838,7 @@ void city(Player player){
 					cout << "Y/N? ";
 					cin >> choice1;
 					if(choice1 == 'y' || choice1 == 'Y'){
-						dungeon(dungeon_tier, player);
+						player = dungeon(dungeon_tier, player);
 						looping = false;
 					}
 				}
@@ -781,10 +848,10 @@ void city(Player player){
 			}
 		}
 		else if(choice == 2){
-			inn(player);
+			player = inn(player);
 		}
 		else if(choice == 3){
-			shop(player);
+			player = shop(player);
 		}
 		else if(choice == 4){
 			//castle(player);
