@@ -320,10 +320,25 @@ void shop(Player player){
 				cout << "What do you wanna buy?" << endl;
 				cout << "1. Armor\n2. Weapon\n3. Back" << endl;
 				cin >> choice1;
+				if(player.getWeapon().getName() == "Sword of Humanity" && choice1 == 1)
+				{
+					cout << "You do not need to replace " << player.getWeapon().getName() << endl
+					choice1 = 3;
+				}
+				
+				if(player.getArmor().getName() == "Armor of Souls" && choice1 == 2)
+				{
+					cout << "You do not need to replace " << player.getArmor().getName() << endl
+					choice1 = 3;
+				}
+				
 				if(choice1 == 1){
 					bool looping1 = true;
 					int armor;
 					char decision;
+					cout << "Your armor:" << endl;
+					player.getArmor().printStats();
+					cout << endl;
 					Armor armor1(1,player.getLevel(),"Blackwing Coat");
 					Armor armor2(1,player.getLevel(),"Rosarium Vest");
 					Armor armor3(1,player.getLevel(),"Imperial Breastplate");
@@ -388,6 +403,9 @@ void shop(Player player){
 					bool looping2 = true;
 					int weapon;
 					char decision;
+					cout << "Your weapon:" << endl;
+					player.getWeapon().printStats();
+					cout << endl;
 					Weapon weapon1(1,player.getLevel(),"Elucidator");
 					Weapon weapon2(1,player.getLevel(),"Dark Repulser");
 					Weapon weapon3(1,player.getLevel(),"Excalibur");

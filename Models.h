@@ -144,6 +144,15 @@ class Weapon
 				this->strength = level + rand()%5;
 				this->value = level * 25 + strength * 50;
 			}
+			
+			else if(tier == -1)
+			{
+				this->name = "Sword of Humanity";
+				this->tier = 999999;
+				this->level = 999999;
+				this->strength = 50;
+				this->value = 999999;
+			}
 		}
 		
 		Weapon(int tier,int level, string name){
@@ -155,6 +164,15 @@ class Weapon
 				this->level = level;
 				this->strength = level + rand()%5;
 				this->value = level * 25 + strength * 50;
+			}
+			
+			else if(tier == -1)
+			{
+				this->name = "Sword of Humanity";
+				this->tier = 999999;
+				this->level = 999999;
+				this->strength = 50;
+				this->value = 999999;
 			}
 		}
 		
@@ -227,6 +245,16 @@ class Armor
 				this->defense = level + rand()%5;
 				this->value = level * 25 + defense * 50 + speed * 75;
 			}
+			
+			else if(tier == -1)
+			{
+				this->name = "Armor of Souls";
+				this->tier = 999999;
+				this->level = 999999;
+				this->speed = 50;
+				this->defense = 50;
+				this->value = 999999;
+			}
 		}
 		
 		Armor(int tier, int level, string name){
@@ -239,6 +267,16 @@ class Armor
 				this->speed = level + rand()%3 + 1;
 				this->defense = level + rand()%5;
 				this->value = level * 25 + defense * 50 + speed * 75;
+			}
+			
+			else if(tier == -1)
+			{
+				this->name = "Armor of Souls";
+				this->tier = 999999;
+				this->level = 999999;
+				this->speed = 50;
+				this->defense = 50;
+				this->value = 999999;
 			}
 		}
 		
