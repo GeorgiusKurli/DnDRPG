@@ -89,6 +89,7 @@ void AfterBattle(int boss, Player player)
 {
 	if (boss == -1)
 	{
+		Sleep(1500);
 		system("CLS");
 		Sleep(3000);	
 		cout << "\n" << player.getName() << " got Gut Render, Glory of Illuminated Dreams!" << endl;
@@ -101,6 +102,7 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -2)
 	{
+		Sleep(1500);
 		system("CLS");
 		Sleep(3000);	
 		cout << "\n" << player.getName() << " paused, thinking, should Pinocchio kill him?" << endl;
@@ -115,6 +117,7 @@ void AfterBattle(int boss, Player player)
 	}
 	if (boss == -3)
 	{
+		Sleep(1500);
 		system("CLS");
 		Sleep(3000);	
 		cout << "\nEven " << player.getName() << " won the fight, he felt inches away from death." << endl;
@@ -557,15 +560,16 @@ Player shop(Player player){
 				cout << "What do you wanna buy?" << endl;
 				cout << "1. Armor\n2. Weapon\n3. Back" << endl;
 				cin >> choice1;
-				if(player.getWeapon().getName() == "Gut Render" && choice1 == 1)
+				
+				if(player.getArmor().getName() == "Bastion of Hope" && choice1 == 1)
 				{
-					cout << "You do not need to replace " << player.getWeapon().getName() << endl;
+					cout << "You do not need to replace " << player.getArmor().getName() << endl;
 					choice1 = 3;
 				}
 				
-				if(player.getArmor().getName() == "Bastion of Hope" && choice1 == 2)
+				if(player.getWeapon().getName() == "Gut Render" && choice1 == 2)
 				{
-					cout << "You do not need to replace " << player.getArmor().getName() << endl;
+					cout << "You do not need to replace " << player.getWeapon().getName() << endl;
 					choice1 = 3;
 				}
 				
@@ -593,9 +597,9 @@ Player shop(Player player){
 							cout << "Are you sure you want to buy this?" << endl;
 							cin >> decision;
 							if(decision == 'y' || decision == 'Y'){
-								if(player.getGold() >= 50){
+								if(player.getGold() >= armor1.getValue()){
 									cout << "Thank you for your purchase!" << endl;
-									player.setGold(player.getGold() - 50);
+									player.setGold(player.getGold() - armor1.getValue());
 									player.setArmor(armor1);
 								}
 								else{
@@ -607,9 +611,9 @@ Player shop(Player player){
 							cout << "Are you sure you want to buy this?" << endl;
 							cin >> decision;
 							if(decision == 'y' || decision == 'Y'){
-								if(player.getGold() >= 50){
+								if(player.getGold() >= armor2.getValue()){
 									cout << "Thank you for your purchase!" << endl;
-									player.setGold(player.getGold() - 50);
+									player.setGold(player.getGold() - armor2.getValue());
 									player.setArmor(armor2);
 								}
 								else{
@@ -621,9 +625,9 @@ Player shop(Player player){
 							cout << "Are you sure you want to buy this?" << endl;
 							cin >> decision;
 							if(decision == 'y' || decision == 'Y'){
-								if(player.getGold() >= 50){
+								if(player.getGold() >= armor3.getValue()){
 									cout << "Thank you for your purchase!" << endl;
-									player.setGold(player.getGold() - 50);
+									player.setGold(player.getGold() - armor3.getValue());
 									player.setArmor(armor3);
 								}
 								else{
