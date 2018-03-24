@@ -12,7 +12,7 @@ Player IntroductionPhase()
 	string input,name;
 	cout << "Welcome" << endl;
 	Sleep(3000);
-	cout << "Please tell us your name." << endl;
+	cout << "Please tell us your name. (no for default)" << endl;
 	cin >> input;
 	if(input == "no" || input == "No"){
 		name = "Pinocchio";
